@@ -1,4 +1,4 @@
-import pandas as
+import pandas
 
 #need to install the module six
 
