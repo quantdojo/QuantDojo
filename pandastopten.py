@@ -27,7 +27,7 @@ print("---")
 
 print(df[['float_col','int_col']])
 
-### 2. Conditional Indexing ###
+### Conditional Indexing ###
 print("---")
 ###
 
@@ -37,7 +37,7 @@ print(df[(df['float_col'] > 0.1) & (df['int_col']>2)])
 print(df[(df['float_col'] > 0.1) | (df['int_col']>2)])
 print(df[~(df['float_col'] > 0.1)])
 
-### 3. Conditional Indexing ###
+### 2. Conditional Indexing ###
 print("---")
 ###
 df2 = df.rename(columns={'int_col' : 'some_other_name'})
@@ -45,7 +45,7 @@ print(df2)
 df2.rename(columns={'some_other_name' : 'int_col'}, inplace = True)
 print(df2)
 
-### 4. Handling Missing Values ###
+### 3. Handling Missing Values ###
 print("---")
 ###
 
@@ -56,7 +56,7 @@ mean = df3['float_col'].mean()
 print(df3)
 print(df3['float_col'].fillna(mean))
 
-### 5. Map, Apply ###
+### 4. Map, Apply ###
 print("---")
 ###
 
@@ -92,7 +92,7 @@ df["F"] = df.Z.str.upper()
 
 print(df)
 
-### 6. Groupby ###
+### 5. Groupby ###
 
 ### tutorial didnt mention reseting df so reseting here ###
 df = DataFrame({'int_col' : [1,2,6,8,-1], 'float_col' : [0.1, 0.2, 0.2, 10.1, None], 'str_col' : ['a','b',None,'c','a']})
@@ -101,7 +101,7 @@ grouped = df['float_col'].groupby(df['str_col'])
 
 print(grouped.mean())
 
-### 7. New Columns ###
+### 6. New Columns ###
 
 df4 = df.copy()
 
@@ -127,5 +127,38 @@ def int_float_squares(series):
  return pd.Series({'int_sq' : series['int_col']**2, 'flt_sq' : series['float_col']**2})
 
 print(df.apply(int_float_squares, axis = 1))
+
+### 7. Basic Stats ###
+
+print(df.describe())
+print(df.cov())
+print(df.corr())
+
+### 8. Merge and Join ###
+
+print(df)
+other = DataFrame({'str_col' : ['a','b'], 'some_val' : [1,2]})
+print(other)
+print(pd.merge(df,other,on='str_col',how='inner'))
+print(pd.merge(df,other,on='str_col',how='outer'))
+print(pd.merge(df,other,on='str_col',how='left'))
+print(pd.merge(df,other,on='str_col',how='right'))
+
+### 9. Plot ###
+
+plot_df = DataFrame(np.random.randn(1000,2),columns=['x','y'])
+plot_df['y'] = plot_df['y'].map(lambda x : x + 1)
+
+plot_df.plot() ### plot not working???? ###
+
+plot_df.hist() ### plot not working???? ###
+
+### 10. Scikit-learn conversion ###
+
+print(df)
+
+print(df.values[:,:-1])
+
+#print(df.values[:,:-1].astype(float32)) not working?
 
 input()
